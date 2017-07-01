@@ -76,3 +76,21 @@ x=a에서의 미분계수 - f'(a)
                 z = fx(a,b)(x-a) + fy(a,b)(y-b) + f(a,b)
                 (=> z = (d∂/dx)(a,b)*(x-a) + (d∂/dy)(a,b)*(y-b) + f(a,b))
             
+dx 에서의 d 의미 - 아주 작은 변화량
+    dx= lim △x
+        △x→0
+
+전미분
+    - 다변수 함수 z에서 z의 순간 증가량 
+    x방향의 편미분계수 + y방향의 편미분계수로 분해 가능
+
+    공식
+    dz=(dz/dx)(dx) + (dz/dy)(dy)
+    df=fx(x,y)x + fy(x,y)y
+
+    연쇄법칙
+        - 다변수의 <b>함성함수</b>에 대한 편미분에 사용 됨
+
+        공식
+        z=f(x,y) x=a(t) y=b(t) 일때
+        dz/dt=(∂f/∂x)(da/dt) + (∂f/∂y)(db/dt)
