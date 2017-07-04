@@ -109,3 +109,91 @@ namespace:이름 형태로 구분
 * 뷰함수 - URL에 따른 요청에 실행되는 함수
 render(request,html파일,변수)
 이때, 변수는 사전 타입 자료형
+
+# 4. 주요기능
+## 4.1. DB 다루기
+### 4.1.1. Admin 사이트 변경
+<b> admin.py </b>
+models.py에서 정의한 테이블(필드)에 따라 해당 테이블을 조작할 수 있는 UI를 보여줌
+-> admin 페이지에서 CRUD 가능
+
+History, 현재시간 등에서 시간이 맞지 않을때는 settings.py의 TIME_ZONE 세팅 확인
+
+* 테이블 변경 UI 양식 변경 - admin.py
+예시 - Question 클래스(테이블)의 UI 변경
+'''python
+class QuestionAdmin(admin.ModelAdmin):
+    fields = ['pub_date', 'question_text']
+
+admin.site.register(Question,QuestionAdmin)
+'''
+
+* 테이블 변경 UI에서 각 필드 별로 분리
+예시 - Question 클래스(테이블)의 필드 입력 UI를 분리
+'''python
+fieldsets=[('Question Statement', {'fields':['question_text']}),
+            ('Date Infomation', {'fields':['pub_date']})]
+'''
+
+* <b> 주의) fields, fieldsets는 둘 중 하나만 정의 가능 (2개 다 설정시 오류 발생) 
+
+* 테이블 변경 UI에서 각 필드 접기(folding)
+'''python
+('Date Infomation', {'fields':['pub_date'], 'classes': ['collapse']})
+'''
+
+#### <b>[('필드명', {옵션 : [값], 옵션 : 값})] - 튜플안에 (필드명, {옵션}) 으로 묶어서 사용 </b>
+
+* 외래키 관계 화면
+Choice 테이블은 Question 테이블의 question_text를 외래키로 사용
+두 테이블을 같이 보면서 수정하는 방법
+
+<b> Question 테이블을 기준으로 여러개의 Choice가 연결 -> Question 클래스 수정 </b>
+
+'''python
+class ChoiceInline(admin.StackedInline):
+    model=Choice
+    extra=2
+
+class QuestionAdmin(admin.ModelAdmin):
+    #fields = ['pub_date', 'question_text']
+    fieldsets=[(None, {'fields':['pub_date']}),
+               ('Question Statement', {'fields':['question_text'],'classes': ['collapse']})]
+    inlines=[ChoiceInline]
+'''
+
+테이블 형식으로 UI 변경
+'''python
+class ChoiceInline(admin.StackedInline)
+'''
+->
+'''python
+class ChoiceInline(admin.TabularInline)
+'''
+
+* 테이블 리스트에서 각 레코드의 제목(컬럼 이름) 지정
+Default: models.py의 __unicode()__ 함수 리턴 값
+
+'''python
+class QuestionAdmin(admin.ModelAdmin):
+    list_display=('속성이름','속성이름')
+'''
+
+* UI에 필터 사이드바 추가
+지정한 필드에 따라 적절한 옵션항목 제공
+'''python
+class QuestionAdmin(admin.ModelAdmin):
+    list_filter = ['pub_date']
+'''
+
+* UI에 검색박스 추가
+지정한 필드에서 입력된 키워드를 Like 쿼리로 검색
+'''python
+class QuestionAdmin(admin.ModelAdmin):
+    search_fields=['question_text']
+'''
+
+* Admin 사이트 템플릿 변경
+Django의 기본 admin 템플릿을 프로젝트로 가져온 뒤, 수정해 적용
+##### 추가 예정
+
