@@ -1,0 +1,6 @@
+﻿
+
+numpy 메소드
+array객체.astype(np.자료형) - 객체 원소를 해당 자료형으로 변경
+
+np.zeros_like(x) - 배열 x와 형상이 같고, 원소는 0인 배열 반환
