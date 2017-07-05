@@ -135,7 +135,7 @@ fieldsets=[('Question Statement', {'fields':['question_text']}),
             ('Date Infomation', {'fields':['pub_date']})]
 '''
 
-* <b> 주의) fields, fieldsets는 둘 중 하나만 정의 가능 (2개 다 설정시 오류 발생) 
+* <b> 주의) fields, fieldsets는 둘 중 하나만 정의 가능 (2개 다 설정시 오류 발생) </b>
 
 * 테이블 변경 UI에서 각 필드 접기(folding)
 '''python
