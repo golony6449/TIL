@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>여기에 입력 됩니다요</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="line">
+     <property name="text">
+      <string>Hello World</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="BTN_1st">
+       <property name="text">
+        <string>첫번째</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="BTN_2nd">
+       <property name="text">
+        <string>두번째</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="BTN_3rd">
+       <property name="text">
+        <string>세번째</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>BTN_1st</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>slot_1st()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>47</x>
+     <y>283</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BTN_2nd</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>slot_2nd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>215</x>
+     <y>272</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BTN_3rd</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>slot_3rd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>line</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>label</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>156</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slot_1st()</slot>
+  <slot>slot_2nd()</slot>
+  <slot>slot_3rd()</slot>
+ </slots>
+</ui>
