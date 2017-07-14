@@ -24,14 +24,26 @@
 
 #### pyuic5를 이용, ui파일을 py파일로 변환
 장점: 에디터에서 자동완성 지원
+
 단점: 디자인 변경시마다 ui파일 변환과정이 번거로움
+
+* 적용방법
+```
+pyuic5 -o 출력파일명 ui파일명
+```
+1. 커맨드 입력
+2. 파이썬에서 해당폼 클래스로 출력파일 안의 ui 클래스를 상속
 
 #### without Designer
 * 직접 코딩하기
 
-### 시그널 - 슬롯
-#### 1. Qt Designer 에서
+### 시그널 - 슬롯 설정방법
+| Signal | Slot |
+|--------|------|
+| Sender(시그널 송신), Receiver(시그널 수신) | 시그널에 반응하는 메소드
 
+#### 1. Qt Designer 에서
+Edit Signals/Slots 모드에서 설정
 #### 2. 직접 코딩
 해당 위젯 문서(Qt와 문서 동일)를 참고해, 슬롯메소드를 만들고 이어줌
 
@@ -39,10 +51,12 @@
 1. Qt 레퍼런스에서 해당 위젯 사용법 확인
 2. 요구 형식에 맞춰 코드 작성
 
+## 구현
+* Exec_ : Tk의 mainloop()와 동일한 역할 수행
 ### Hello_World 작성
 디자이너를 이용, ui 생성 후 아래의 코드 작성
 
-'''python
+```python
 import sys
 from PyQt5 import QtWidgets
 from PyQt5 import uic
@@ -56,12 +70,12 @@ if __name__=='__main__':
     app=QtWidgets.QApplication(sys.argv)
     w=Form()
     sys.exit(app.exec())
-'''
+```
 
 ### Hello_World2 작성
 디자이너를 이용 ui 작성 후 아래의 코드 작성
 
-'''python
+```python
 import sys
 from PyQt5 import QtGui,uic,QtCore,QtWidgets
 from PyQt5.QtCore import pyqtSlot
@@ -86,5 +100,17 @@ if __name__=='__main__':
     app=QtWidgets.QApplication(sys.argv)
     w=Form()
     sys.exit(app.exec())
-'''
+```
+
+### Main Window - Dialog
+* 공통점: 둘 다 최상위 위젯
+
+* 차이점
+| 특징 | Main Window | Dialog |
+|------|-------------|--------|
+| 상태바 | O | X |
+| 메뉴바 | O | X |
+| 툴바 | O | X |
+
+Dialog는 특별한 용도의 윈도우라고 볼 수 있음!
 

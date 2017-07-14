@@ -201,5 +201,64 @@ class QuestionAdmin(admin.ModelAdmin):
 
 * Admin 사이트 템플릿 변경
 Django의 기본 admin 템플릿을 프로젝트로 가져온 뒤, 수정해 적용
-##### 추가 예정
 
+이유는 모르겠지만 적용 안됨 ㅠㅠ
+##### 수정 예정
+
+### 장고 파이썬 쉘로 데이터 조작하기
+* Admin 사이트 접속 불가능 상황시 or 다양한 데이터 관리 명령 사용시 사용
+
+간단한 처리는 Admin 사이트에서 처리 -> 복잡한 처리 or 웹서버 접속상태일때 쉘을 이용해 처리
+
+쉘 실행
+```
+python manage.py shell
+```
+
+* 파이썬 쉘과의 차이점: manage.py에서 정의한 DJANGO_SETTING_MODULE 속성을 이용해 mysite/setting.py를 임포트
+
+#### CRUD
+#####Create - 데이터 생성/입력
+1. 필드값 지정(객체 생성)
+2. save()메소드 호출
+```python
+from polls.models import Question, Choice
+from django.utils import timezone
+q=Question(question_text="What's new?", pub_date=timezone.now())    #객체 생성
+q.save()    #저장
+```
+
+#####Read - 데이터 조회
+* QuerySet 객체 사용 - DB 테이블에서 가져온 객체 콜랙션
+
+(다수의 객체를 모아 각각의 객체를 동일 한 방식으로 다룰 수 있게 해주는 데이터구조)
+
+* QuerySet은 필터를 가질수 있음 -> 필터를 이용해 조건에 맞는 레코드만 추출
+
+| QuerySet | QuerySet의 필터 |
+|----------|----------------|
+| SELECT문 | WHERE, LIMIT문 |
+
+QuerySet 객체 생성 - objects객체 사용
+```python
+Question.objects.all()  #테이블.레코드.조건
+```
+
+* 조건 (QuerySet의 메소드)
+1. filter() 메소드: 주어진 조건에 맞는 객체들을 담고있는 QuerySet 반환
+2. exclude() 메소드: 주어진 조건에 맞지않는 객체들을 담고있는 QuerySet 반환
+3. get() 메소드: 1개의 요소만을 검색하는 경우
+
+* 배열 슬라이싱 문법 사용 가능 - 요소의 갯수 제한 ex)Question.objects.all()[5:10]
+
+#####Update - 데이터수정
+1. 필드의 속성값 수정
+2. save() 메소드 호출
+#작성중
+```python
+from polls.models import Question, Choice
+from django.utils import timezone
+q=Question    #객체 생성
+q.question.question_text='What is your favorite hobby?'
+q.save()    #저장
+```
