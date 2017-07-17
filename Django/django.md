@@ -252,13 +252,88 @@ Question.objects.all()  #테이블.레코드.조건
 * 배열 슬라이싱 문법 사용 가능 - 요소의 갯수 제한 ex)Question.objects.all()[5:10]
 
 #####Update - 데이터수정
-1. 필드의 속성값 수정
-2. save() 메소드 호출
+1. 모델 객체 생성
+2. 필드의 속성값 수정
+3. save() 메소드 호출
 #작성중
 ```python
 from polls.models import Question, Choice
 from django.utils import timezone
-q=Question    #객체 생성
+q=Question.objects.get(조건)    #객체 생성
 q.question.question_text='What is your favorite hobby?'
 q.save()    #저장
 ```
+
+#####Delete - 데이터 삭제
+```python
+Question.objects.filter(pub_date=2005).delete() #pub_date 필드 값(연도)이 2005년인 모든 객체 삭제
+Question.objects.objects.all().delete() # Question 테이블의 모든 객체 삭제
+Question.objects.delete() # Django에서 허용하지 않는 문장 (의도치 않은 모든 레코드 삭제를 막기 위한 안전장치)
+```
+
+##### 실습
+* 2개의 테이블이 1:N 관계인 경우 choice_set() API를 사용
+* __(언더바 2개)를 이용해 객체 간의 관계를 표현할 수 있음
+
+##### 여러가지 쉘 명령어 예제
+```python
+Question.objects.all() # Question 테이블의 모든 레코드 반환
+Question.objects.get(question_text="What's wrong") # Question 테이블에서 question_text 컬럼이 What's wrong인 튜플 반환
+Question.objects.filter(question_text_startswith='What') # Questin테이블의 question_text 컬럼에서 What으로 시작하는 모든 튜플 반환
+Choice.objects.filter(question__pub_date__year=current_year) # pub_date가 올해인 Question객체(테이블)에 연결된 Choice 객체 전부를 반환
+```
+
+### 템플릿 시스템
+* UI를 담당
+* 렌더링: 템플릿 코드 -해석> 템플릿파일(HTML,CSV,XML)
+
+##### 템플릿 변수
+```python
+{{ variable }}
+```
+
+* Dot(.)의 역할 (ex: foo.bar)
+1. foo가 사전타입인지 확인 -> 사전타입이면 foo['bar']로 해석
+2. foo의 속성 검색 -> bar라는 속성이 있을때는 foo.bar로 해석
+3. foo가 list인지 확인 -> list라면 foo[bar]로 해석
+
+#### 템플릿 필터
+* 객체, 처리결과에 추가적인 명령 적용 -> 해당 명령에 맞게 최종 결과 변경하는 것을 의미
+
+ex)
+```python
+{{ name|lower }} # name변수값을 모든 문자를 소문자로 바꿔주는 필터
+{{ text|escape|linebreaks }} # 필터를 체인으로 연결할 수도 있음
+```
+
+* 인자를 가지는 필터
+```python
+{{ bio|truncatewords:30 }} # bio변수 값 중 앞의 30개 단어만 보여주는 필터(특수문자 무시)
+{{ list|join:" // " }} # 인자가 빈칸을 가지는 경우
+{{ value|default:"nothing" }} # 변수값이 False이거나 없는경우
+{{ value|length }} # 변수의 길이 반환
+{{ value|striptags }} # 변수값에서 HTML태그를 제거 (100% 보장은 불가능)
+{{ value|pluralize }} # 변수가 1이 아닌경우 복수 접미사 s를 붙혀줌 (if 1 -> number, if >1 -> numbers)
+```
+
+* 덧셈 필터
+```python
+{{ value|add:"2" }} # 덧셈 연산 수행
+{{ first|add:second }} # 변수끼리의 연산또한 가능
+```
+
+* 처음에는 두 변수 모두 정수라고 간주하고 덧셈 시도-> 실패한 경우, 타입이 허용하는 덧셈 수행
+
+1. 두 변수 모두 문자열인 경우 -> 이어 붙임
+2. 두 변수 모두 list인 경우 -> 원소별 덧셈 연산 수행
+3. 두 변수 모두 정수 -> 덧셈 연산 수행
+
+* 연산에 실패한 경우 빈 문자열 반환
+
+#### 템플릿 태그
+* 형식: {% tag %}
+* 역할: 텍스트 결과물 생성, 템플릿 로직 제어, 외부파일을 템플릿 내로 로딩
+
+##### 종류
+* {% for %} 태그
+* 작성중
