@@ -218,7 +218,7 @@ python manage.py shell
 * 파이썬 쉘과의 차이점: manage.py에서 정의한 DJANGO_SETTING_MODULE 속성을 이용해 mysite/setting.py를 임포트
 
 #### CRUD
-#####Create - 데이터 생성/입력
+##### Create - 데이터 생성/입력
 1. 필드값 지정(객체 생성)
 2. save()메소드 호출
 ```python
@@ -228,7 +228,7 @@ q=Question(question_text="What's new?", pub_date=timezone.now())    #객체 생�
 q.save()    #저장
 ```
 
-#####Read - 데이터 조회
+##### Read - 데이터 조회
 * QuerySet 객체 사용 - DB 테이블에서 가져온 객체 콜랙션
 
 (다수의 객체를 모아 각각의 객체를 동일 한 방식으로 다룰 수 있게 해주는 데이터구조)
@@ -251,7 +251,7 @@ Question.objects.all()  #테이블.레코드.조건
 
 * 배열 슬라이싱 문법 사용 가능 - 요소의 갯수 제한 ex)Question.objects.all()[5:10]
 
-#####Update - 데이터수정
+##### Update - 데이터수정
 1. 모델 객체 생성
 2. 필드의 속성값 수정
 3. save() 메소드 호출
@@ -264,7 +264,7 @@ q.question.question_text='What is your favorite hobby?'
 q.save()    #저장
 ```
 
-#####Delete - 데이터 삭제
+##### Delete - 데이터 삭제
 ```python
 Question.objects.filter(pub_date=2005).delete() #pub_date 필드 값(연도)이 2005년인 모든 객체 삭제
 Question.objects.objects.all().delete() # Question 테이블의 모든 객체 삭제
@@ -331,9 +331,97 @@ ex)
 * 연산에 실패한 경우 빈 문자열 반환
 
 #### 템플릿 태그
-* 형식: {% tag %}
+* 형식: {% 태그명 %}
 * 역할: 텍스트 결과물 생성, 템플릿 로직 제어, 외부파일을 템플릿 내로 로딩
 
 ##### 종류
-* {% for %} 태그
-* 작성중
+###### {% for %} 태그
+* 리스트에 담겨 있는 항목들을 순회
+* 예제
+```html
+<ul>
+{% for athlete in athlete_list %}
+    <li>{{ athlete.name }}</li>
+{% endfor %}
+</ul>
+```
+
+* for태그에서 사용 되는 변수 이름
+| 변수명 | 설명 |
+|-------|------|
+| forloop.counter | 현재까지의 루프 카운터 (1부터) |
+| forloop.counter() | " (0부터) |
+| forloop.revcounter | 루프 끝에서 현재까지의 카운터(1부터) |
+| forloop.revcounter | " (0부터) |
+| forloop.first | 루프에서 첫번째 실행일때 True |
+| forloop.last | 루프에서 마지막 실행일때 True |
+| forloop.parentloop | 중첩된 루프에서 현재 루프 바로 상위의 루프를 의미 |
+
+###### {% if %} 태그
+* 변수를 평가해 True면 <b>바로 아래의 문장</b> 실행
+* 예제
+```html
+{% if athlete_list|length > 10 %}   <!-- 조건식 사용 가능. 단, 대부분의 필터가 스트링을 반환하기 때문에 산술조건 사용시 유의 -->
+    Too many athletes (>10)
+{% elif athlete_list %}
+     Number of athletes: {{ athlete_list|length }}
+{% else %}
+    No athletes.
+{% endif %}
+```
+
+###### {% scrf_token %} 태그
+* POST 방식의 <form> 사용하는 템플릿 코드에서 CSRF 공격 방어를 위해 사용하는 태그 (악의적 스크립트 대비)
+```html
+<form action="."method="post">{% csrf_token %}
+```
+
+* CSRF 공격이란? -> 이미 인증을 받은 사용자가 공격코드가 삽입된 페이지를 열면, 타겟 사이트는 공격명령이 믿을수 있는 사용자에게서 발송된것으로 판단해, 공격을 받게 되는 방식
+
+###### {% url %}
+* 소스코드에 URL을 하드코딩(직접 입력) 하는 것을 막기 위한 태그
+
+* 예제
+```html
+<form action="{% url 'polls:vote' question.id %}" method="post">
+<form action="/polls/3/vote/" method="post">    <!--url 태그를 사용하지 않은 경우-->
+```
+
+* 사용하는 이유?
+1. URL 변경시 URLconf뿐만 아니라 모든 소스코드에서 해당 부분을 찾아서 변경해야 하는 문제 발생
+2. 중간의 '3' 이라는 숫자는 런타임에 따라 변하는 값 -> 별도의 변수처리를 해야하는 번거로움 존재
+
+-> url 태그를 사용하면, URLconf를 변경하는 것만으로 대응 가능
+
+* 사용형식
+```html
+{% url 'namespace:view-name' arg1 arg2 %}
+```
+
+1. namespace: urls.py파일의 include()에서 정의함 이름공간
+2. view-name: urls.py파일의 URL 패턴에서 정의한 뷰함수 or 패턴이름
+3. argN: 뷰 함수에서 사용하는 인자(Option), 여러 개인 경우 빈칸으로 구분
+
+###### {% with %} 태그
+* 특정 값을 변수에 저장해 DB조회와 같은 큰 부하의 동작을 줄이기 위한 태그
+* with 태그에서 사용된 변수의 scope: {% with %} ~ {% endwith %}
+
+* 예제
+```html
+{% with total=business.employees.count %}
+{% with business.employees.count as total %}    <!--구버전 문법-->
+    {{ total }} people works at business
+{% endwith %}
+```
+
+###### {% load %} 태그
+* 사용자가 정의한 사용자 정의 태그, 필터를 사용하기 전 로딩
+
+##### 템플릿 주석
+* 형식
+```html
+{# greeting #} hello <!--한 문장 or 문장의 일부분 주석처리-->
+{% comment %}
+    내용
+{% endcomment %} <!--해당 범위에 속한 여러 문장 주석 처리-->
+```
