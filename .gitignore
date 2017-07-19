@@ -1,0 +1,6 @@
+Python/PyQt/.idea/
+Python/PyQt/basic/.idea/
+Python/PyQt/basic/__pycache__/
+*.pyc
+*.xml
+Python/PyQt/import_test/.idea/
