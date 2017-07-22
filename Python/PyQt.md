@@ -128,3 +128,14 @@ Dialog는 특별한 용도의 윈도우라고 볼 수 있음!
 2. 폼2 출력(.show())
 
 (폼2 초기화는 폼2의 생성자에서 수행)
+
+### 슬롯-시그널 connect 할때 파라메터 전달 방법
+* 객체.시그널.connect(lambda:함수(파라메터))
+
+```python
+Button.clicked.connect(lambda:func(i))
+```
+
+* 주의사항
+1. for문 등에서 lambda식에 변수 사용시 마지막 변수값으로 connect되는 현상 있음(관련 자료: https://www.facebook.com/groups/pythonkorea/permalink/1426254617457695/?comment_id=1426282120788278&reply_comment_id=1426295050786985&notif_t=group_comment_reply&notif_id=1500722281191515)
+2. 형식매개변수명=실매개변수(i=k) 형태로 매개변수 전달 불가능!
