@@ -139,3 +139,10 @@ Button.clicked.connect(lambda:func(i))
 * 주의사항
 1. for문 등에서 lambda식에 변수 사용시 마지막 변수값으로 connect되는 현상 있음(관련 자료: https://www.facebook.com/groups/pythonkorea/permalink/1426254617457695/?comment_id=1426282120788278&reply_comment_id=1426295050786985&notif_t=group_comment_reply&notif_id=1500722281191515)
 2. 형식매개변수명=실매개변수(i=k) 형태로 매개변수 전달 불가능!
+
+### 이벤트 종류
+| 이벤트 명 | 발생조건 | 기타 |
+|----------|---------|-------|
+| clicked() | 위젯 클릭시 발생 | |
+| doubleclicked() | 위젯 더블클릭시 발생 | |
+| KeyPressEvent() | 키보드가 눌려졌을 때 발생 | 'PyQt5.QtCore.Qt.Key_키값'에 있는 값 사용 |
