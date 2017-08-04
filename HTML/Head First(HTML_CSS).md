@@ -95,3 +95,36 @@ CSS로 HTML의 프리젠테이션을 제어할때 중요하게 작용
 
 참고: www.unicode.org/charts
 
+## Chapter 4. 웹페이지 게시
+### 웹사이트 이름? 도메인 이름?
+* EX) www.golony.com 에서
+1. www.golony.com: 웹사이트 이름
+2. golony.com: 도메인 이름
+
+* 도메인 이름 하위에 다른 웹사이트를 추가 할 수 있음 ex) admin.golony.com
+
+### URL (Uniform Resource Locators)
+* 프로토콜://주소/리소스경로 ex) http://www.golony.com/index.html
+1. http: 프로토콜
+2. 웹사이트 이름
+3. 리소스의 절대경로
+
+* 로컬파일의 경우 / 3개 사용 ex)file:///Thinkpad.jpg
+
+* a href=주소 태그에서 처럼 상대경로만 주어진 경우 -> 브라우저가 절대경로를 만들어 URL생성
+
+#### 브라우저가 파일이 아닌 폴더(http://www.golony.com/)를 요청한 경우?
+* 서버는 디폴트 파일(index.html, default.htm)을 검색 -> 응답
+* URL의 끝부분에 /가 없는 경우(http://www.golony.com) -> 서버에서 / 붙혀서 처리
+* default 파일 변경을 대비해 웹사이트 이름만을 전달하는 것이 바람직(www.golony.com)
+
+### HTTP
+* Hyper Text Transper Protocol
+* 요청(Request) - 응답(Response) 형식 동작
+
+## Chapter 5. 이미지 추가
+* img 태그 + src 속성 사용
+
+### 브라우저가 이미지를 로딩 할때!
+1. 웹서버에서 html 파일 수신
+2. 렌더링 중 필요한 이미지 파일을 1개씩 추가 요청 
