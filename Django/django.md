@@ -582,3 +582,147 @@ url(r'^about/', MyView.as_view())
 * 해당 클래스의 인스턴스 생성 후, dispatch() 메소드 호출
 * dispatch() 메소드: 요청 검사 -> HTTP 메소드 분석 -> 해당 이름을 가지는 메소드로 요청 중계 (메소드가 없는 경우 HttpResponseNotAllowed 예외발생)
 
+###### 장점 1. 효율적 메소드 처리
+* view 파일 안에 작성하는 것은 동일
+* if를 통해 URLconf로 연결된 함수안에 전부 작성하는 것이 아닌 클래스에 메소드 형태로 정의함으로서, 보다 깔끔한 구조로 구성가능
+* 단 메소드 이름은 소문자로 해야됨. GET -> get(), POST -> post()
+
+###### 장점 2. 상속기능
+* Django에서는 Model, Templete, View 각각에서 단순 반복되는 작업을 많이 없얘줌 -> View에 있어서 반복작업을 줄여주는 기능이 상속!
+* Generic 뷰는 개발과정에서 공통으로 사용 가능한 기능을 추상화하고, 미리 만들어 제공해주는 클래스형 뷰를 의미 -> Generic 뷰를 상속받아 필요한 뷰를 작성
+
+* 사용법
+* ex1) at views.py
+```python
+from django.views.generic import TemplateView
+
+class AboutView(TemplateView):
+    template_name="about.html"
+```
+
+* ex2) at URLconf.py
+```python
+from django.conf.urls import patterns
+from djago.views.generic import TemplateView
+
+urlpatterns = patterns('',
+    url(r'^about/', TemplateView.as_view(template_name="about.html"))
+    )
+```
+
+##### 종류
+* Base View: 뷰클래스 생성, 다른 Generic 뷰의 부모클래스 제공하는 기본 뷰
+| 뷰 이름 | 기능 or 역할 |
+|---------|------------|
+| View | 가장 기본이 되는 최상위 Generic |
+| TemplateView | 템플릿이 주어졌을때, 해당 템플릿을 렌더링 |
+| RedirectView | URL이 주어졌을때, 해당 URL로 리다이렉트 |
+
+* Generic Display View: 객체의 리스트를 보여주거나 특정 객체의 상세정보 제공
+| 뷰 이름 | 기능 or 역할 |
+|---------|------------|
+| DetailView | 객체 하나에 대한 상세한 정보를 보여줌 |
+| ListView | 조건에 맞는 여러개의 객체를 보여줌 |
+
+* Generic Edit View: 폼을 통해 객체를 생성, 수정, 삭제 하는 기능 제공
+| 뷰 이름 | 기능 or 역할 |
+|---------|------------|
+| FormView | 폼이 주어지면 해당 폼을 보여줌 |
+| CreateView | 객체를 생성하는 폼을 보여줌 |
+| UpdateView | 기존 객체를 수정하는 폼을 보여줌 |
+| DeleteView | 기존 객체를 삭제한는 폼을 보여줌 |
+
+4. Generic Date View: 날짜 기반 객체의 년/월/일 페이지로 구분해서 보여줌
+| 뷰 이름 | 기능 or 역할 |
+|---------|------------|
+| YearArchiveView | 년도가 주어지면 해당 년도의 객체를 보여줌 |
+| MonthArchiveView | 월이 주어지면 해당 월의 객체를 보여줌 |
+| DayArchiveView | 날짜가 주어지면 해당 날짜의 객체를 보여줌 |
+
+* 자세한 사항은 장고 레퍼런스 참고
+
+##### 클래스형 뷰에서 폼 처리
+###### FormView 상속받아 사용할때의 유의사항
+* get, post 메소드는 FormView 안에 정의 되어 있음 -> 메소드 정의 불필요
+* form_class: 사용자에게 보여줄 폼을 정의한 forms.py파일 내의 클래스명
+* template_name: 폼을 포함하여 렌더링할 템플릿 파일이름
+* success_url: 처리가 정상적으로 완료 되었을때 리다이렉트 시킬 URL
+* form_valid() 함수: 유효한 폼 데이터로 처리할 로직 (반드시 super() 함수를 호출 해야 함)
+
+#### 로그(Log)
+* 장고의 로깅기능은 파이썬의 로깅체계 + 일부로 구성
+* 로거, 핸들러, 필터, 포맷터 4개의 주요 컴포넌트 정의
+* runserver, 웹서버에 의해 실행되는 장고는 settings.py의 LOGGING_CONFIG, LOGGING 항목을 참고해 관련 설정 처리
+* 관련 항목이 없는 경우는 디폴트(Default) 설정으로 처리
+
+##### 로그 컴포넌트 간 관계
+* 로거 -> (필터) -> 핸들러 <- 포맷터
+
+###### 로거(Logger)
+* 로깅 시스템의 시작점이자, 로그 메시지를 담아두는 저장소
+* 로그레벨을 가짐 -> 해당 로거가 어느 레벨 이상의 메시지를 처리할지에 대한 기준
+* 로그레코드: 로거에 저장되는 메시지, 로그레벨 가짐
+* 동작: 메시지도착 -> 로그레코드의 로그레벨, 로거의 로그레벨 비교 -> 로그레코드의 레벨이 로거보다 같거나 높으면 처리진행, 아닌경우 무시
+
+###### 로그 레벨
+| 이름 | 정보 | 호출 메소드 |
+|------|------|------------|
+| DEBUG | 디버그용도로 사용되는 정보로서, 로그레벨의 최하위 | logger.debug() |
+| INFO | 일반적이고 보편적인 정보 | logger.info() |
+| WARNING | 문제점 중에 덜 중요한 문제점에 해당 | logger.warning() |
+| ERROR | 문제점 중에 주요 문제점에 해당 | logger.error() |
+| CRITICAL | 치명적인 문제점, 로그레벨의 최상위 | logger.critical() |
+
+###### 핸들러
+* 로거에 있는 메시지에 무슨 작업을 할지 결정 ex) 기록위치
+* 로그레벨 가짐 -> 레코드의 레벨이 핸들러보다 낮으면 무시
+* 로거는 여러개의 핸들러 가질 수 있음 -> 레벨마다 다른 방식의 로그처리 가능 ex) 모든 메시지를 파일에 기록, 에러, 크리티컬은 화면에 별도 출력
+
+###### 필터
+* 로그레코드가 로거에서 핸들러로 념겨질때, 레코드에 추가적인 제어 수행
+* ex) 특정소스의 메시지만 핸들러로 전달, 중요도(레벨) 조작
+* 필터 끼리 체인 형식으로 연결 가능
+
+###### 포맷터
+* 로그레코드가 텍스트로 표현될때, 표현 형식을 지정하는 역할
+
+##### 구현
+1. logging 모듈 import
+2. 로거 인스턴스 얻기 (`logging.getLogger(__name__)`)
+3. 필요할때 로깅 호출 메소드 호출
+
+###### 로거 이름 계층화
+* 관행적으로 `__name__` 사용 -> 로거를 담고 있는 파이썬 모듈 의미 -> 모듈단위 처리 가능
+* Dot(.)를 이용한 명명도 가능 ex) `logging.getLogger('project.interesting.stuff')`
+* interesting은 stuff의 부모, project는 interesting의 부모 <- 계층화
+* 로깅 호출은 부모에게 전파 -> 계층화의 중요성!
+* 로깅 호출 전파는 로거단위로 제어가능 -> 전파기능 비활성화도 가능
+
+##### 로깅 설정
+* 올바른 로깅을 위해서는 당연하게도 로거, 핸들러, 필터, 포맷터, 각 컴포넌트의 로그레벨 설정할 필요 있음
+* python의 logging 모듈은 사전형 설정을 디폴트로 사용 -> settings.py의 LOGGING항목의 로깅속성을 사전형식으로 정의
+* LOGGING 항목이 없는 경우, disable_existing_logger 속성이 True인 경우 디폴트 설정 사용
+
+* 구현: p.197 참고
+
+##### 장고의 로깅 추가사항
+* 기본적으로는 python의 로깅 체계를 따름 -> 장고 고유의 환경을 고려, 일부 추가사항 있음
+
+###### 로거
+* django 로거: 최상위 루트 로거. 루트로거에 직접 로그메세지를 보낼 수는 없음
+* django.request 로거: 요청처리 관련 메시지 기록, 5xx는 ERROR, 4xx는 WARNING 레벨로 발생, status_code, request 추가항목 가짐
+* django.db.backends 로거: DB관련 메시지 기록. 모든 SQL 문장이 DEDUB레벨로 기록, 성능이슈 때문에 settings.DEBUG 속성이 True인 경우에만 활성화, duration, sql, params 추가항목 가짐
+* django.security.* 로거: 사용자가 보안측면에서 해를 끼칠 수 있는 동작을 수행한 경우 기록. ex) ALLOW_HOSTS에 요청을 보낸 호스트가 없는 경우
+* django.db.backends.schema 로거: 데이터베이스의 스키마 변경시 사용된 SQL 쿼리 기록
+
+###### 핸들러
+* AdminEmailHandler: 수신하는 모든 모그메시지를 이메일로 특정유저(관리자)에게 송신
+
+###### 필터
+* CallBackFilter: 필터를 통과하는 모든 메시지에 대해 미리 지정된 콜백함수를 호출, 콜백함수 리턴값이 False인 경우 더 이상 처리 X
+* RequireDebugFalse: settings.DEBUG 속성이 False인 경우에만 메시지 처리 진행
+* RequireDebugTrue: settings.DEBUG 속성이 True인 경우에만 메시지 처리 진행
+
+###### 로깅 관련 디폴트 설정 사항
+* django.request 로거: settings.DEBUG 속성이 False인 경우 ERROR, CRITICAL 레벨의 모든 메시지를 AdminEmailHandler에게 보내주도록 설정
+* django 루트 로거: 루트로거에 오는 모든 메시지는 DEBUG 속성이 True인 경우 콘솔로 보내짐, False인 경우는 NullHandler로 보내져 무시되도록 설정
