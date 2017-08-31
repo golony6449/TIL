@@ -26,3 +26,16 @@
 * `sudo apt install apache2`
 
 #### 설정
+
+### 다른 웹앱, DB와의 연동
+* 사용하려고 하는 웹앱 base(ex: PHP, django), DB(ex: Mysql)의 아파치 확장 모듈 설치
+* `libapache2-mod-(기능-)모듈명`
+* ex: `libapache2-mod-auth-mysql` , `libapache2-mod-php`
+
+* 이때 웹앱의 경우는 dir.conf 파일에 초기 index 웹페이지 코드 포함 (PHP의 경우 index.php)
+
+### Virtual host - 가상호스트
+* 싱글유저 기반 웹 서버 1대에서 여러 웹사이트를 운영하는 방법 - apache만 가상화 해놓은 느낌
+
+#### 설정
+1. 
