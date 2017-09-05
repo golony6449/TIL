@@ -64,6 +64,24 @@
 * 단, convex function일 경우에 한해.
 * 이외의 함수는 cost 함수 값을 줄이는 것은 가능하나, GD를 통해 얻은 최솟값이 진정한 최솟값이라는 보장은 없음
 
+### Multi Variable
+* 입력 데이터가 여러개일때의 경우
+* Matrix를 이용해  여러개의 input의 case들을 묶어서 한번에 일관 처리
+
+#### h(x)
+* h(x1,x2,x3) = w1x1 + w2x2 + w3x3 + b
+
+#### cost function
+* 어찌됬든 cost function은 (예측값 - 정답) 간의 차이를 계산
+* cost(W, b) = (1/m) * sum(H(x1, x2, x3) - y)
+
+####  WX vs XW
+* Theory: H(x) = Wx + b
+
+* Tensorflow: H(X) = XW <-Matrix 곱 만을 이용해서 바로 처리 가능
+
+* 수학적 의미는 동일
+
 ## RNN - Recurrent Neural Network
 * Neural Network의 꽃!
 * Sequence data 처리를 위해, 각 뉴런의 결과(state)를 다음 뉴런에 전달
@@ -122,4 +140,3 @@
 ### Sequence data
 * NLP(Natural Language Processing), SR(Speech Recognition)에서 자연어, 음성
 * 각각의 데이터(문자 등)뿐만 아닌, 이전 데이터(나아가 데이터 전체)를 같이 이해해야 의미파악 가능
-* 
