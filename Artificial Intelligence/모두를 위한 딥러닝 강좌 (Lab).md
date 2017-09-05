@@ -1,4 +1,5 @@
 # 모두를 위한 딥러닝 강좌 by Kim SungHun
+* https://www.youtube.com/playlist?list=PLlMkM4tgfjnLSOjrEJN31gZATbcj_MpUm
 ----------------------
 
 ## ML - Machine Learning

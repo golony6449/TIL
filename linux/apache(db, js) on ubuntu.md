@@ -26,6 +26,14 @@
 * `sudo apt install apache2`
 
 #### 설정
+* 설정파일 경로: `/etc/apache2`
+* `apache2.conf`: 기본설정
+* `ports.conf`: 포트설정
+* `./conf-available/`: 고급기능 설정 (Charecter set, security 등)
+* `./mod-available/`: 웹서버의 추가기능(모듈) 저장 위치
+* `./mod-enabled/`: 사용하고자 하는 모듈의 링크파일을 저장 (링크파일이 있는 모듈을 활성화)
+* `./site-available/`: 가상호스팅 사용시, 사이트 각각의 설정파일을 보관하는 위치
+* `./sites-enabled/`: 사용자가 제공할 웹사이트의 링크 저장 (링크가 저장된 웹사이트는 활성화됨)
 
 ### 다른 웹앱, DB와의 연동
 * 사용하려고 하는 웹앱 base(ex: PHP, django), DB(ex: Mysql)의 아파치 확장 모듈 설치
@@ -36,6 +44,9 @@
 
 ### Virtual host - 가상호스트
 * 싱글유저 기반 웹 서버 1대에서 여러 웹사이트를 운영하는 방법 - apache만 가상화 해놓은 느낌
+* 이름기반, IP 기반, 포트 기반 가상화
 
 #### 설정
-1. 
+##### 이름기반 가상화
+1. `/etc/apache2/sites-available/000-default.conf`를 복사해 가상호스트 설정파일 생성
+2. 설정파일에 `ServerName`, `DocumentRoot` 정보 설정
