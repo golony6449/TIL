@@ -82,6 +82,28 @@
 
 * 수학적 의미는 동일
 
+### Logistic Classification
+* Regession과의 차이점: Classification은 여러개 중 1개로 분류 (특히 Binary Classification은 2개 중 1개로 분류)
+
+* One-hot encoding 된 상황에서 Linear Regression의 문제점을 해결하기 위해 사용 -> 결과값(Y)이 0 ~ 1이 아닌 다른 값이 나오는 경우 발생.
+
+#### Logistic Classification의 Hypothesis
+* sigmoid (=logistic function) = 1/(1 + exp(-x))
+
+#### Cost function for logistic classification
+* cost(W) = (1/m) * sum(c(H(x), y))
+
+* if y=1 -> c(H(x), y) = -log(H(x))
+* if y=0 -> c(H(x), y) = -log(1 - H(x))
+
+* case 1. y=1: H(x)가 작으면 작을 수록 cost 값 증가
+* case 2. y=0: H(x)가 크면 클수록 cost 값 증가
+
+* 2개의 식을 합치면? -> C(H(x), y) = -ylog(H(x)) - (1-y)log(1-H(x))
+
+#### Minimize cost with Gradient Decent Algorithm for logistic classification
+* 미분을 이용해 경사하강법 적용
+
 ## RNN - Recurrent Neural Network
 * Neural Network의 꽃!
 * Sequence data 처리를 위해, 각 뉴런의 결과(state)를 다음 뉴런에 전달
@@ -140,3 +162,4 @@
 ### Sequence data
 * NLP(Natural Language Processing), SR(Speech Recognition)에서 자연어, 음성
 * 각각의 데이터(문자 등)뿐만 아닌, 이전 데이터(나아가 데이터 전체)를 같이 이해해야 의미파악 가능
+
