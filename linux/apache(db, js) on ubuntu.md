@@ -30,9 +30,9 @@
 * `apache2.conf`: 기본설정
 * `ports.conf`: 포트설정
 * `./conf-available/`: 고급기능 설정 (Charecter set, security 등)
-* `./mod-available/`: 웹서버의 추가기능(모듈) 저장 위치
-* `./mod-enabled/`: 사용하고자 하는 모듈의 링크파일을 저장 (링크파일이 있는 모듈을 활성화)
-* `./site-available/`: 가상호스팅 사용시, 사이트 각각의 설정파일을 보관하는 위치
+* `./mods-available/`: 웹서버의 추가기능(모듈) 저장 위치
+* `./mods-enabled/`: 사용하고자 하는 모듈의 링크파일을 저장 (링크파일이 있는 모듈을 활성화)
+* `./sites-available/`: 가상호스팅 사용시, 사이트 각각의 설정파일을 보관하는 위치
 * `./sites-enabled/`: 사용자가 제공할 웹사이트의 링크 저장 (링크가 저장된 웹사이트는 활성화됨)
 
 ### 다른 웹앱, DB와의 연동
@@ -50,3 +50,12 @@
 ##### 이름기반 가상화
 1. `/etc/apache2/sites-available/000-default.conf`를 복사해 가상호스트 설정파일 생성
 2. 설정파일에 `ServerName`, `DocumentRoot` 정보 설정
+
+## 모듈 관리
+### 모듈 결합
+* `mods-available`의 모듈의 링크파일을 `mods-enable`에 저장
+* `a2enmod 모듈명` 명령어 실행
+
+### 모듈 분리
+* `mods-enable`의 링크파일 삭제
+* `a2dismod 모듈명` 명령어 실행
