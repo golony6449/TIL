@@ -25,15 +25,23 @@
 ### 오버피팅(Overfitting)
 * 가장 큰 문제
 * 모델이 학습데이터에 너무 최적화 => 훈련데이터, 실제데이터를 제대로 대응 할 수 없는 상태
+* 층이 깊을 수록 발생하기 쉬워짐 (그래프 상에서 번곡점 수 증가)
 
+#### Solution
 * 가장 좋은 해결법: 훈련데이터의 증가!
-* 그 외: 중복된 Feature 제거, Regularization
+* 중복된 Feature 제거(Deep Learning에서는 불필요), <b>Regularization</b>
 
 #### Regularization - 일반화
 * Weight 값을 너무 크게 하지 않도록 함
 * Dicision Boundary가 구부러진 상황 => 특정 Weight가 큰 상황 => 오버피팅
 * 구부러진 선을 펴는 것! => Weight에 큰 값이 없도록!
 
-* cost Funtion = 기존의 cost 함수 + sum(W^2) * 람다
+* `cost Funtion = 기존의 cost 함수 + sum(W^2) * 람다`
 * 이때 W^2은 각각의 요소들의 제곱을 의미
 * 람다: Regulation Strength => 일반화를 중요하게 여기는 정도 (1: 중요, 0: 무관심)
+
+### Dropout
+* Neural Net에서의 Regularization 방법
+* `Dropout: A Simple Way to Prevent Neural Networks from Overfitting [Srivastava et al. 2014]`
+* forward연산 -> 이후 Backprop 연산에서 랜덤하게 일부 뉴런을 0으로 설정 => 일부 뉴런을 kill 하는 역할
+* 주의점: 학습시에만 비활성화 해야함 => 평가(Evaluation)시에는 dropout_rate: 1로 할 것

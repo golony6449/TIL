@@ -104,12 +104,43 @@
 #### Minimize cost with Gradient Decent Algorithm for logistic classification
 * 미분을 이용해 경사하강법 적용
 
+### Lec 11
+#### Conv 연산에서 Output size 계산방법
+* ((N - F) / Stride) + 1
+* 입력 size: N, 필터 size: F 
+* 점점 size가 작아짐 -> 정보손실 문제 ==> padding으로 해결(보완) 및 모서리 임을 알릴 수 있음
+
+#### 연산
+* 필터 마다 Conv 연산 수행 => Activation map 생성 ==> 필터 수 만큼의 채널이 생성됨
+* 대개 마지막 Layer에서 Pooling 수행 (그 외에는 NN 만들기 나름)
+* 이후 Pooling의 결과값을 FCN(일반적인 NN)의 입력으로 전달 ==> 최종 결과 도출
+
+### Pooling Layer (Sampling)
+1. Conv 층의 결과에서 각각의 Layer를 추출 => 작은 크기로 Resize(=Sampling)
+2. (Max pooling의 경우) 1의 결과를 일정 크기의 필터로 마스킹 => 큰 값을 추출해 출력값으로 사용 
+
+### Lec-11-2 복습!!
+
+### Case
+#### LeNet-5
+#### AlexNet
+#### GoogLeNet
+* Inception module
+#### ResNet
+* 깊은층 but 값을 건너 뜀으로서 적은 층 처럼 학습되는 특징
+
+### Demo
+* https://cs.stanford.edu/people/karpathy/convnetjs/demo/cifar10.html
+
+### Lec 12
 ## RNN - Recurrent Neural Network
 * Neural Network의 꽃!
 * Sequence data 처리를 위해, 각 뉴런의 결과(state)를 다음 뉴런에 전달
+* 이전의 연산이 다음 연산에 영향을 줌
 
 ### 활용처
-* Language Model -> 연관어
+* <b> Sequence Data </b> (time series)
+* Language Model -> 연관어 (다음에 올 글자(Charactor) 예측)
 * Speech Recognition
 * Machine Translation
 * Conversasion Modeling / Question Answering
@@ -126,13 +157,13 @@
 ### 수식
 * ht = fw(ht-1, xt)
 * ht: New state, fw: some function with parameters W, ht-1: Old state(이전 값), xt: input vector at some time step
-* 이때, RNN 전체에서 같은 fw()를 사용(즉, 동일한 weighs(가중치) 사용) -> 그림으로 표시할때 재귀적으로 표시
+* 이때, RNN 전체에서 같은 fw()를 사용(<b>즉, 동일한 weighs(가중치) 사용</b>) -> 그림으로 표시할때 재귀적으로 표시
 
-* 첫 뉴런은 ht-1이 존재하지 않음 -> 0벡터 사용
+* 첫 뉴런은 ht-1이 존재하지 않음 -> 0 벡터 사용
 
 ### 기본적인 RNN - Vanilla Recurrent Neural Network
-* ht = fw(ht-1, xt) -> ht = tanh(Whh*ht-1 + Wxh*xt)
-* yt = Why*ht
+* `ht = fw(ht-1, xt)` -> `ht = tanh(Whh*ht-1 + Wxh*xt)`
+* `yt = Why*ht`
 
 * yt의 size는 Why의 size에 따라 결정됨!
 
@@ -140,6 +171,7 @@
 * 많은 방법이 있음
 
 #### One-Hot encoding (ex: 'hello')
+* 가장 간단한 인코딩 방법
 * Voca = [h,e,l,o]
 
 * 변환
@@ -155,11 +187,9 @@
 ### RNN의 학습모델
 * 계속 발전되는 중
 * 연산 문제때문에 RNN 자체 대신 아래의 2개의 모델을 사용
-
 * LSTM (Long Short Term Memory)
 * GRU
 
 ### Sequence data
 * NLP(Natural Language Processing), SR(Speech Recognition)에서 자연어, 음성
 * 각각의 데이터(문자 등)뿐만 아닌, 이전 데이터(나아가 데이터 전체)를 같이 이해해야 의미파악 가능
-
