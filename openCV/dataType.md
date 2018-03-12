@@ -10,6 +10,23 @@
 * <b>가로(x, width), 세로(y, height)로 구성</b> (Mat 객체와 순서가 반대임에 유의)
 * Point 클래스와 내부 멤버변수의 구조가 동일 ==> 형변환 및 이를 통한 덧셈 뺄셈 연산 가능
 
+### Rect
+* 2차원의 사각형 정보를 나타내기 위한 템플릿 클래스
+
+#### 생성자
+* 시작좌표 + 가로세로: `Rect obj(x, y, width, height)` or `Rect obj(x, y, Size 객체)`
+* 좌상단, 우하단 좌표: `Rect obj(Point, Point)` 
+
+#### 연산
+* `rect + point`: 평행이동
+* `rect + size`: 크기변경
+* `rect & rect`: 교차영역
+* `rect | rect`: 포함영역
+
+#### Method
+* `obj.tl()`: 좌상단 좌표
+* `obj.br()`: 우하단 좌표
+
 ### Mat (중요)
 * n차원의 밀집형 배열 클래스
 * 인자: <b> 행, 열 </b> (Size 객체와 순서가 반대임에 유의)
