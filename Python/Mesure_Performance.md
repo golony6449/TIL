@@ -1,6 +1,6 @@
 ## 성능측정
-* http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_optimization/py_optimization.html
 ===================
+
 ### timeit 모듈
 * 작은 코드블럭에서의 실행시간 측정 모듈
 * https://docs.python.org/3.6/library/timeit.html
@@ -24,3 +24,6 @@
 * ex) `%timeit z = cv2.countNonZero(img)` vs `%timeit z = np.count_nonzero(img)`
 * 단, 피연산자(operand)의 크기(size)가 크면 클수록 Numpy가 강점을 가짐
 * 일반적으로는 Numpy보다 openCV의 함수가 더 빠름 (특히, 값을 복사할때 보다 열람할때)
+
+### Reference
+* http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_optimization/py_optimization.html
