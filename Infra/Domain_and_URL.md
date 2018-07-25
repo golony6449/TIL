@@ -38,5 +38,8 @@
 1. 서버의 관리자는 도메인 구매 후, 등록대행자(의 서버에)에 등록
 2. 등록대행자는 등록소의 서버에 도메인과 등록대행자의 서버주소를 등록
 
-## TODO
-* 등록소의 DNS 서버에도 도메인이 등록되는데, 그럼 등록대행자의 DNS 서버의 존재 의의는 무엇일까?
+## 등록소, 등록대행자 모두에 도메인이 저장된다?
+* End User의 DNS 서버에서 처음 조회하는 경우는 Root로부터 차례대로 조회 후 등록대행자의 DNS 서버(authoritative Server) 주소를 캐시로서 저장
+* 이후 동일한 도메인의 경우는 캐시를 이용해 바로 응답
+* 단, 이 경우 autoritative Server가 아닌(=Non-authoritative Server인) End-User의 DNS 서버가 응답하므로 nslookup 상의 결과에 `Non-authoritative answer` `권한없는 응답` 으로 표기됨
+* 전체적인 부하를 줄일 수 있음
