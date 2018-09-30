@@ -35,6 +35,8 @@ request.POST['jouralism']
 * JSON으로 Serialize한 경우는 request의 body 필드에 담겨있음 (From Stackoverflow)
 * 이 Body를 json으로 Deserialize해 사용하면 됨
 
+* 일반적인 요청과 axios상에서의 요청을 패킷단에서 비교해보니 일반적인 요청은 `&`를 이용한 GET method에서 볼수 있는 형식을 보이고, axios의 요청은 json 포멧으로 되어있음을 확인
+
 ## Reference
 * axios의 serialize: https://github.com/axios/axios/issues/304#issuecomment-215129729
 * JSON처리: https://stackoverflow.com/questions/24068576/how-to-receive-json-data-using-http-post-request-in-django-1-6
