@@ -30,3 +30,47 @@
 3. for each x in v에 인접한 정접
 4. if visited[x] == NO THEN prev[x] = v, maze(x)
 ```
+
+## 색칠문제 (Coloring Problem)
+* 인접한 영역들의 Vertex를 그렸을때 인접한 Vertex는 같은 색을 칠할 수 없음
+* k개의 색상을 사용해서 전체 그래프를 칠할 수 있는가?
+
+### Map Coloring
+1. 지도에서 구역간 인접관계 파악
+2. 연결관계를 정점, 간선으로 표현
+3. 보기 쉽게 그래프 화
+
+### 알고리즘 - kColoring
+```
+# i: 정점, c: 색상
+# 정점 i-1 까지는 제대로 칠이 된 상태에서 
+# 정점 i를 c로 칠하려면 k개(고정)의 색으로 충분한가?
+kColoring(i, c)
+if (valid(i, c)) then {
+    color[i] <- c;
+    if (i = n) then {return TRUE;}
+    else {
+        result <- FALSE;
+        d <- 1;
+        while(result = FALSE and d<= k){
+            result <- kCOloring(i+1, d);
+            d++;
+        }
+    }
+    return result;
+} else {return FALSE;}
+```
+
+```
+# i: 정점, c: Color
+# 질문: 정점 i-1까지는 제대로 칠이 된 상태에서 정점 i를 색 c로 칠하면 색이 곂치지 않는가?
+valid(i, c)
+{
+    for j<-1 to i-1{
+        # 정점 i와 j 사이에 간선이 있고 and 두 정점이 같은색이면 
+        # 안됨(return FALSE)
+        if ((i, j) in E and color[j] = c) THEN return FALSE;
+    }
+    return TRUE;
+}
+```
