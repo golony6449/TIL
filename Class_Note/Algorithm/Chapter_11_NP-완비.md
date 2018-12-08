@@ -201,7 +201,6 @@ function trouble(string s){
 ### SAT (Satisfiability, 만족문제) (P.377)
 * 입력: CNF 형식의 부울식 theta
 * 질문: theta는 만족가능한가?
-ㅋ
 ### 3SAT (3-CNF 만족문제)
 * 입력: 3-CNF 형식의 부울식 theta
 * 질문: theta는 만족가능한가?

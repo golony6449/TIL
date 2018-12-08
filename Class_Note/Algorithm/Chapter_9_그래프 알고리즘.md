@@ -102,11 +102,69 @@ BFS(G, s){
 * Version2: Q <- V 다음, Q가 공집합일때 까지 반복
 
 ### Kruskal Algorithm
-* 작성중
+```
+Kruskal(G, r){ // G: 그래프, r: 루트
+	T <- 공집합 //T: 신장트리
+	단 하나의 정점으로 구성된 n개의 집합 초기화;
+	모든 간선을 가중치가 작은 순으로 정렬
+	while(T의 간선수 < n-1){
+        최소비용 간선 (u, v) 제거(=연결);
+        정점 u, v가 다른 집합에 속하면{
+            두 집합을 하나로 합친다;
+            T <- T U {(u, v)};
+        }
+	}
+}
+```
 
-#### 알고리즘
+1. 정점만으로 구성된 그래프 생성
+2. 비용이 가장 작은 간선 선택 후 연결 (단, 루프가 생기는 경우는 연결하지 않음)
+3. 기존의 2개의 집합이 간선으로 연결되었을때 1개로 합침
+
+* 시간복잡도: O(|E|log|V|)
+
+### Topological Sorting Algorithm (위상정렬)
+* 조건: 싸이클이 없는 유향 그래프
+* 모든정점을 일렬로 나열하되, (== 위상정렬)
+* 정점 x -> y 로 가는 간선이 있으면 <b>x는 반드시 y보다 앞에 위치</b>
+* 일반적으로 임의의 유향 그래프에 대해 복수의 위상 순서가 존재한다.
+
+#### 알고리즘 1
+```
+topologicalSort1(G){
+    for i <- 1 to n{
+        진입 간선이 없는 u 선택
+        A[i] <- u;
+        정점 u와 u의 진출 간선을 모두 제거
+    }
+}
+```
+
+#### 알고리즘 2
+* visited: 방문 여부 저장
+* R: 
 
 
+```
+topologicalSort2(G){
+    for each v in V
+    	visited[v] <- NO;
+    for each v in V
+    	if (visited[v] = NO) THEN
+    		DFS-TS(v);
+}
+```
+
+```
+DTF-TS(v){
+    visited[v] <- YES
+    for each x in v의 인접리스트
+    	if (visited[x] = NO) THEN
+    		DFS-TS(x);
+    연결리스트 R의 맨 앞에 정점 v 삽입
+}
+```
+* 슬라이드 15 부터 해보기!! (Week8-2)
 
 ## Shortest Path Algorithm
 * 조건: 간선 가중치가 있는 유향 그래프 (무향그래프: 양쪽으로 유향간선이 있는 그래프)
@@ -134,7 +192,30 @@ BFS(G, s){
 5. v가 V-S에 속함 and Du > Du + Wuv이면 Dv <- Du + Wuv
 
 ### Bellman-Ford Algorithm
-* 작성중
+* 음의 가중치를 허용 (다익스트라와의 차이점)
+
+#### 알고리즘
+```
+BellmanFort(G, r){
+    for each u in V
+    	du <- inf. // 모든 정점의 값을 무한대로 설정
+    dr <- 0; // 시작점을 0으로 설정
+    for i <- 1 to |V|-1
+    	for each (u, v) in E
+    		if (du + wuy < dv) THEN
+    			dv <- du + wuv;
+}
+```
+* 변경된 정점에 대해서 다시 탐색 (음의 가중지인 경우 순환시 더 작은 가중치가 될 수 있음)
+* 슬라이드 8 직접 해보기! (Week 8-3)
+
+#### DP로 구현한 Bellman-Ford 알고리즘
+* dt^k^ : 중간에 최대 k의 간선을 거쳐 정점 r로 부터 t에 이르는 최단거리
+* 목표: dt^n-1^
+* 재귀적 관계: 
+1. dv^k^ = min(du^k-1^ + wuv})
+2. dr^0^ = 0
+3. dt^0^ = inf. (t!=r)
 
 ## Floyd-Warshall Algorithm (Week 9-1)
 * 모든 정점들 간 최단거리 구하기
