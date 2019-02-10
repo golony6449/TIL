@@ -23,7 +23,7 @@
    * `-q`: ID만 출력하는 옵션
    * 필요하다면 별도의 명령인자 사용 가능
    * ex) `docker rm $(docker ps -a -q --filter 'exited!=0')`: 0이 아닌 종료코드로 종료한 모든 컨테이너 삭제
-   * 
+7. `docker container prune`: Stop 상태인 컨테이너 삭제
 
 ## 라벨(Label)
 
