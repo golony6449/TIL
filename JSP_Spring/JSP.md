@@ -1,46 +1,87 @@
 # JSP
 
-## ServletConfig
+## 태그
 
-* 특정 Servlet 생성시 사용되는 초기값 지정
-* Sol 1: web.xml
-* Sol 2: Servlet에 `@WebServlet` 내부에 `initParams={}` 형태로 기술
-* ==> ex: `@WebServlet(urlPatterns={"/path"}, initParams{@WebInitParam(name="id", value="abc")}, initParams{@WebInitParam(name="pw", value="123")})`
-* 사용: `getInitParameter()`
+* 지시자: `@` 페이지 속성, `page`, `include` (별도의 페이지를 현재에 삽입), `taglib`
+* 주석
+* 선언: <b>전역의 의미를 가지는 변수, 메서드 선언</b>
+* 표현식: `=`
+* 스크립트릿: Java 코드
+* 액션 태그: `<jsp:action>`
 
 
 
-## ServletContext
+* 스크립(`scripe`): 스크립트릿 + 선언 + 표현식
 
-* 여러 Sevlet에서 특정 데이터 공유
-* 작성: (`WEB-INF` 내부에 존재하는) `web.xml`에 기술 
 
-```xml
-<context-param>
-	<param-name>id</param-name>
-    <param-value>abcd</param-value>
-</context-param>
 
-<context-param>
-    <param-name>pw</param-name>
-    <param-value>1234</param-value>
-</context-param>
+## 내부 객체
+
+* 입출력: `request`, `response`, `out`
+* 서블릿: `page`, `config`
+* 세션: `session`
+* 예외: `exception`
+
+
+
+## request 객체
+
+* `getContextPath()`
+* `getMethod()`
+* `getSession()`
+* `getProtocol()`
+* `getRequestURL()`
+* `getRequestURI()`
+* `getQueryString()`
+* `getServerName()`
+* `getServerPort()`
+* `setCharacterEncoding()`: 파라메터 인코딩 방법 지정
+
+### Parameter 관련
+
+* `getParameter()`
+* `getParameterNames()`
+* `getParameterValues()`: Checkbox등 복수형 input에 사용
+
+
+
+## response 객체
+
+* `addCookie()`
+* ``sendRedirect()`
+
+
+
+## Action Tag
+
+* JSP 내에서 어떤 동작을 하도록 지시하는 태그
+
+
+
+### forward
+
+* 현재의 페이지에 다른 `jsp`페이지를 로드
+* 주의: URL만 그대로!, 내용은 호출한 jsp파일이 불러짐
+* `<jsp:forward page="jsp파일"/>`
+
+
+
+### include
+
+* 현재의 페이지 내부에 다른 `jsp`페이지 로드
+* `<jsp:include page="파일명"/>`
+
+
+
+### param
+
+* `forward`, `include`에 데이터 전달
+
+```jsp
+<jsp:forward page="jsp">
+	<jsp:param name="id" value="abcd"/>
+    <jsp:param name="pw" value="pw"/>
+</jsp:forward>
 ```
 
-* 사용: `getServletContext().getInitParameter()`
-
-
-
-## ServletContextListener
-
-* Servlet의 생명주기 감시
-* 지정된 메서드의 시작(`contextInitialized()`), 종료(`contextDestroyed()`)시에 호출됨
-* 작성 1: 클래스 제작 ==> `web.xml`에 리스너 기술
-* 작성 2: 클래스 제작 ==> `@WebListner` 추가 (at 클래스)
-
-```xml
-<listener>
-	<listner-class>클래스</listner-class>
-</listener>
-```
-
+* `request.getParameter()`로 불러와 사용
