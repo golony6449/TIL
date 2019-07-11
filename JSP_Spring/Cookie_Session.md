@@ -50,6 +50,12 @@
 
 
 
+## Java 코드상에서 Session 객체 생성
+
+`HttpSession httpSession = request.getSession()`
+
+
+
 ## Method
 
 * `setAttribute()`
