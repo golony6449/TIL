@@ -30,6 +30,26 @@
 
 
 
+### Web.xml
+
+```xml
+<!-- 프런트 컨트롤러 서블릿 등록 -->
+<servlet>
+    <servlet-name>front</servlet-name>
+    <servlet-class>com.dev.controller.FrontController</servlet-class>
+</servlet>
+ 
+<!-- URL패턴 맵핑-->
+<servlet-mapping>
+    <servlet-name>front</servlet-name>
+    <url-pattern>*.do</url-pattern>
+</servlet-mapping>
+```
+
+
+
+
+
 # Command 패턴
 
 * 요청을 서블릿이 직접 처리하지 않고, 해당 클래스가 처리하도록 함
