@@ -22,3 +22,4 @@
 ## 참고자료
 
 * https://developer.android.com/studio/build/multidex
+* https://codelabs.developers.google.com/codelabs/flutter-firebase/#3
