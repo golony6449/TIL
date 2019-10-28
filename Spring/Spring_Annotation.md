@@ -18,3 +18,6 @@
 * `RequestParam(value=?, defaultValue=?)`: value로 지정한 쿼리 매개변수를 변수에 저장
   * `public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name)`
 * `Autowired`: Spring에 의해 생성되는 객체임을 표기.
+* `Service`: 해당 클래스를 스프링 컴포넌트 스캐너가 감지하고, 어플리케이션 컨텍스트에 추가.
+* `Async`: 해당 메서드가 분리된 Thread에서 실행되어야 함을 표기. 해당 메서드는 Future 객체 반환
+* `EnableAsync`: `Async` 메서드를 Thread pool에서 실행할수 있도록 하는 마킹
