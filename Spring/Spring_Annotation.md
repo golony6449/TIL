@@ -21,3 +21,8 @@
 * `Service`: 해당 클래스를 스프링 컴포넌트 스캐너가 감지하고, 어플리케이션 컨텍스트에 추가.
 * `Async`: 해당 메서드가 분리된 Thread에서 실행되어야 함을 표기. 해당 메서드는 Future 객체 반환
 * `EnableAsync`: `Async` 메서드를 Thread pool에서 실행할수 있도록 하는 마킹
+* `MessageMapping(Path)`: 해당 경로로 메시지가 도달했을 때, 해당 메서드가 실행됨을 표기 (웹소켓)
+* `SendTo(Path)`: 해당 경로를 구독(Subscribe) 중인 모든 사람에게 메서드 반환값을 브로드캐스트함을 표기(웹소켓)
+* `Configuration`: Spring configuration 클래스임을 명시
+* `EnableWebSocketMessageBroker`: 메시지 브로커를 기반으로 웹소켓 메시지 핸들링 활성화
+* 
