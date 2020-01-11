@@ -15,6 +15,15 @@
 
 
 
+### ModelSerializer vs Serializer
+
+* `Meta` 클래스에 지정된 필드 리스트를 사용해, 쿼리셋에서 값 추출
+* 간단한 `create()`, `update()` 메서드를 자동으로 구현
+* Serializer: https://www.django-rest-framework.org/tutorial/1-serialization/#creating-a-serializer-class
+* ModelSerializer: https://www.django-rest-framework.org/tutorial/1-serialization/#using-modelserializers
+
+
+
 ## Viewset
 
 
