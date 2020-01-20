@@ -28,7 +28,7 @@ CREATE TABLE 이름 (
 * `SELECT`의 출력 형태로 테이블을 만들 수도 있음
 
 ```sql
-CREATE TABLE 이름 AS
+CREATE TABLE 이름 AS SELECT ...
 ```
 
 
