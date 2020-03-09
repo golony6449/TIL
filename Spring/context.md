@@ -25,3 +25,21 @@ AbstractApplicationContext ctx = new GenericXmlApplication(경로 리스트);
 AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(설정 클래스 이름.class);
 ```
 
+
+
+## XML에 Java를 포함
+
+```xml
+<context:annotation-config/>
+<bean class="클래스 경로"/>
+```
+
+
+
+## Java에 XML을 포함
+
+```java
+@Configuration
+@ImportResource("클래스 경로")
+```
+
