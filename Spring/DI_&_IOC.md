@@ -21,3 +21,9 @@
 1. `xml`파일을 이용해 모듈을 담고있는 `Context` 생성
 2. `Context`에서 해당 객체를 선택해서 사용 
    * 각각의 모듈을 `bean` 이라고 부름 (생성: `Spring Bean Configuration File`)
+
+
+
+### 생명주기
+
+* 생성 -> 설정(`ctx.load`, `ctx.refreash()`) -> 사용 -> 종료(`ctx.close()`)
