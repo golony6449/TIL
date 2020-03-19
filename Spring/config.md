@@ -63,3 +63,25 @@ public static PropertySourcesPlaceholderConfigurer Properties(){
 }
 ```
 
+### 프로파일 속성 사용
+
+* 동일한 빈을 여러개 생성 후 상황에 따라 적절한 스프링 빈 사용
+
+```xml
+<beans ......
+       profile="프로파일 이름">
+</beans>
+```
+
+```java
+@Profile("프로파일 이름")
+```
+
+
+
+```java
+ctx.getEnvironment().setActiveProfiles(사용할 프로필(문자열));
+```
+
+
+
