@@ -70,5 +70,26 @@
   ```
 
 * `@RequestMapping`: 처리할 요청 주소 지정
+  
   * 클래스에도 지정된 경우: 클래스에 지정된 주소 + 메서드에 지정된 주소 = 처리할 주소
+  * 처리할 HTTP Method 지정가능: 핸들링할 메서드가 없는 경우 405 에러 발생
+    * `@RequestMapping(method=RequestMethod.GET, value="URL")`
+    * `@RequestMapping(method=RequestMethod.POST, value="URL")`
+  
 * `ModelAndView` 클래스를 이용하는 경우는 값, 뷰 이름을 객체에 설정하고 객체를 반환
+
+* redirect를 하려면 `"redirect:URL"`을 반환하면 가능
+
+
+
+## View
+
+* View에서 Context 이름 얻기
+
+  ```
+  <%
+     String context = request.getContextPath();
+  %>
+  ```
+
+  
