@@ -83,3 +83,101 @@
   ```
 
   
+
+## 값 검증
+
+* `Validator` 인터페이스를 사용해 커맨드 객체의 유효성 검사
+  * 컨트롤러에서 Validator 객체를 사용해 커맨드 객체 검증
+
+### Validator 정의
+
+* `Validator` 인터페이스를 상속받아 정의
+
+```java
+public class ObjValidator implements Validator{
+    @Override
+    public boolean supports(Class<?> arg){
+        // 검증할 객체의 클래스정보 명시 ==> 이 Validator로 검증 가능한 class 지정
+        return 클래스명.class.isAssignableFrom(arg);
+        
+    }
+    
+    @Override
+    public void validate(Object obj, Error error){
+        // obj를 형변환 한 뒤, 필요한 검증 처리 구현
+        // 에러 발생시 error 객체에 에러 추가
+        error.rejectValue("값 이름(필드명)", "사유");
+    }
+}
+```
+
+### 컨트롤러에서 사용
+
+```java
+// 컨트롤러 내부
+public String method(@ModelAttribute("student") Student s, BindingResult res){
+    ObjValidator v = new ObjValidator();
+    v.validate(obj, res);	// Binding Result는 검증 결과를 저장하는 객체
+    if (res.hasError()){
+        // 에러 발생시 수행사항
+    }
+    
+}
+```
+
+
+
+### ValidationUtils 클래스
+
+* `validate()` 메서드를 더 편리하게 사용 할 수 있도록 고안된 클래스
+
+```java
+ValidationUtils.rejectEmptyOrWhitespace(error, "값 이름(필드명)", "사유");
+// 동일
+Obj o = (Obj) obj;
+String val = o.getValue();
+if (val == null || val.trim().isEmpty()){
+    error.rejectValue("값 이름(필드명)", "사유");
+}
+```
+
+
+
+### @Valid and @InitBinder
+
+* 직접 `validate()`를 호출하지 않고, Spring이 자동으로 호출
+
+1. 의존성 추가
+
+   ```xml
+   <dependency>
+   	<groupId>org.hibernate</groupId>
+       <artifactId>hibernate-validator</artifactId>
+       <version>4.2.0.Final</version>
+   </dependency>
+   ```
+
+   
+
+2. 검증 할 커맨드 객체 지정
+
+```java
+// Before
+public String method(@ModelAttribute("object") Object o){
+}
+
+// After
+public String method(@ModelAttribute("object") @Valid Object o){
+}
+```
+
+3. 검증에 사용할 Validator 지정 (컨트롤러 내부에)
+
+   ```java
+   @InitBinder
+   protected void initBinder(WebDataBinder binder){
+       binder.setValidator(new ObjValidator());
+   }
+   ```
+
+   
