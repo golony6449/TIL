@@ -43,3 +43,16 @@ dependencies{
 `@Setter`
 
 `@Builder`
+
+
+
+## Trobleshooting
+
+* `cannot find symbol` 오류 발생
+  * `build.gradle`의 Dependency에 `annotationProcessor 'org.projectlombok:lombok'` 추가
+
+* `error: constructor Code in class Code cannot be applied to given types` 오류 발생
+  * `@Builder` 와 `@oArgsConstructor` 동시적용시 발생
+  * Solution: `@AllArgsConstructor ` 적용
+  * https://yuja-kong.tistory.com/m/99
+

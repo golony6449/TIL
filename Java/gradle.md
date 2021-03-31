@@ -2,6 +2,7 @@
 
 ## 개요
 
+* 빌드자동화 도구
 * Gradle을 사용해 자바 프로젝트 빌드하기
 
 
@@ -10,7 +11,8 @@
 
 * repositories: 의존성을 탐색할 저장소 지정 `mavenCentral()`
 * dependencies: 의존하는 모듈 지정
-  * compile: 컴파일시점에 필요한 모듈을 의미
+  * ~~compile: 컴파일시점에 필요한 모듈을 의미: 해당 의존성이 프로젝트의 API로 제공~~ => deprecated (api로 대체)
+  * implementation:  해당 의존성이 프로젝트의 API로 제공되지 않는 경우 지정
   * providedCompile: 컴파일시에 필요하지만, 실행시간에 제공될 모듈 (servlet 등)
   * testCompile: 컴파일과 테스트시에 사용되는 모듈. 실행 시점에는 불필요
 * jar: JAR 파일의 명명법 지정
@@ -82,3 +84,5 @@ dependencies {
 ## Reference
 
 *   https://spring.io/guides/gs/gradle/ 
+*   https://docs.gradle.org/current/userguide/dependency_management_for_java_projects.html#sec:configurations_java_tutorial
+*   https://hack-jam.tistory.com/13
